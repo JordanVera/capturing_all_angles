@@ -1,29 +1,33 @@
-import { cache } from "react";
-import { MOSAIC_TILES, type MosaicMediaKind, type MosaicTile } from "@/lib/site";
+import { cache } from 'react';
+import {
+  MOSAIC_TILES,
+  type MosaicMediaKind,
+  type MosaicTile,
+} from '@/lib/site';
 
 export const INSTAGRAM_PROFILES = [
-  "officialwoahna",
-  "capturingallangles",
+  'officialwoahna',
+  'capturingallangles',
 ] as const;
 
 const GRAPH_BASES = [
-  "https://graph.instagram.com/v23.0",
-  "https://graph.facebook.com/v23.0",
+  'https://graph.instagram.com/v23.0',
+  'https://graph.facebook.com/v23.0',
 ] as const;
 
 const MEDIA_FIELDS = [
-  "id",
-  "caption",
-  "media_type",
-  "media_url",
-  "permalink",
-  "thumbnail_url",
-  "timestamp",
-  "username",
-  "children{id,media_type,media_url,thumbnail_url}",
-].join(",");
+  'id',
+  'caption',
+  'media_type',
+  'media_url',
+  'permalink',
+  'thumbnail_url',
+  'timestamp',
+  'username',
+  'children{id,media_type,media_url,thumbnail_url}',
+].join(',');
 
-type IgMediaType = "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM";
+type IgMediaType = 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM';
 
 type IgMediaNode = {
   id: string;
@@ -71,12 +75,12 @@ export type InstagramMedia = {
 function configuredTokens(): TokenConfig[] {
   const named: TokenConfig[] = [
     {
-      username: "officialwoahna",
-      token: process.env.INSTAGRAM_TOKEN_OFFICIALWOAHNA ?? "",
+      username: 'officialwoahna',
+      token: process.env.INSTAGRAM_TOKEN_OFFICIALWOAHNA ?? '',
     },
     {
-      username: "capturingallangles",
-      token: process.env.INSTAGRAM_TOKEN_CAPTURINGALLANGLES ?? "",
+      username: 'capturingallangles',
+      token: process.env.INSTAGRAM_TOKEN_CAPTURINGALLANGLES ?? '',
     },
   ].filter((entry) => entry.token);
 
@@ -94,30 +98,33 @@ async function fetchJson<T extends { error?: { message?: string } }>(
 ): Promise<T | null> {
   try {
     const response = await fetch(url, {
-      next: { revalidate: 1800, tags: ["instagram"] },
-      headers: { Accept: "application/json" },
+      next: { revalidate: 1800, tags: ['instagram'] },
+      headers: { Accept: 'application/json' },
     });
     return (await response.json()) as T;
   } catch (error) {
-    console.error("[instagram] request failed", error);
+    console.error('[instagram] request failed', error);
     return null;
   }
 }
 
 function mediaListUrl(base: string, id: string, token: string) {
   const url = new URL(`${base}/${id}/media`);
-  url.searchParams.set("fields", MEDIA_FIELDS);
-  url.searchParams.set("limit", "24");
-  url.searchParams.set("access_token", token);
+  url.searchParams.set('fields', MEDIA_FIELDS);
+  url.searchParams.set('limit', '24');
+  url.searchParams.set('access_token', token);
   return url;
 }
 
-function flattenMedia(nodes: IgMediaNode[], username?: string): InstagramMedia[] {
+function flattenMedia(
+  nodes: IgMediaNode[],
+  username?: string,
+): InstagramMedia[] {
   const items: InstagramMedia[] = [];
 
   for (const node of nodes) {
     const owner = node.username ?? username;
-    if (node.media_type === "CAROUSEL_ALBUM") {
+    if (node.media_type === 'CAROUSEL_ALBUM') {
       for (const child of node.children?.data ?? []) {
         const mapped = toMedia(child, owner);
         if (mapped) items.push(mapped);
@@ -133,12 +140,12 @@ function flattenMedia(nodes: IgMediaNode[], username?: string): InstagramMedia[]
 }
 
 function toMedia(node: IgMediaNode, username?: string): InstagramMedia | null {
-  if (node.media_type === "VIDEO") {
+  if (node.media_type === 'VIDEO') {
     if (node.media_url) {
       return {
         id: node.id,
         src: node.media_url,
-        kind: "video",
+        kind: 'video',
         poster: node.thumbnail_url,
         username,
       };
@@ -147,7 +154,7 @@ function toMedia(node: IgMediaNode, username?: string): InstagramMedia | null {
       return {
         id: node.id,
         src: node.thumbnail_url,
-        kind: "image",
+        kind: 'image',
         username,
       };
     }
@@ -159,7 +166,7 @@ function toMedia(node: IgMediaNode, username?: string): InstagramMedia | null {
   return {
     id: node.id,
     src: node.media_url,
-    kind: "image",
+    kind: 'image',
     username,
   };
 }
@@ -189,7 +196,7 @@ async function fetchMediaForToken(config: TokenConfig): Promise<{
       );
       if (!list || list.error) {
         if (list?.error?.message) {
-          console.error("[instagram] media error", list.error.message);
+          console.error('[instagram] media error', list.error.message);
         }
         continue;
       }
@@ -215,15 +222,15 @@ async function fetchViaBusinessDiscovery(
 ): Promise<InstagramMedia[]> {
   const url = new URL(`${base}/${userId}`);
   url.searchParams.set(
-    "fields",
+    'fields',
     `business_discovery.username(${username}){media.limit(24){${MEDIA_FIELDS}}}`,
   );
-  url.searchParams.set("access_token", token);
+  url.searchParams.set('access_token', token);
 
   const json = await fetchJson<IgDiscoveryResponse>(url.toString());
   if (!json || json.error) {
     if (json?.error?.message) {
-      console.error("[instagram] discovery error", json.error.message);
+      console.error('[instagram] discovery error', json.error.message);
     }
     return [];
   }
@@ -248,72 +255,77 @@ function interleave(groups: InstagramMedia[][]): InstagramMedia[] {
   return out;
 }
 
-export const fetchInstagramMedia = cache(async (): Promise<InstagramMedia[]> => {
-  const tokens = configuredTokens();
-  if (tokens.length === 0) return [];
+export const fetchInstagramMedia = cache(
+  async (): Promise<InstagramMedia[]> => {
+    const tokens = configuredTokens();
+    if (tokens.length === 0) return [];
 
-  const results = await Promise.all(tokens.map((entry) => fetchMediaForToken(entry)));
-  const byUsername = new Map<string, InstagramMedia[]>();
-  const discoverySources: { token: string; userId: string; base: string }[] = [];
+    const results = await Promise.all(
+      tokens.map((entry) => fetchMediaForToken(entry)),
+    );
+    const byUsername = new Map<string, InstagramMedia[]>();
+    const discoverySources: { token: string; userId: string; base: string }[] =
+      [];
 
-  for (const result of results) {
-    if (result.userId && result.base) {
-      discoverySources.push({
-        token: result.token,
-        userId: result.userId,
-        base: result.base,
+    for (const result of results) {
+      if (result.userId && result.base) {
+        discoverySources.push({
+          token: result.token,
+          userId: result.userId,
+          base: result.base,
+        });
+      }
+
+      const resolved = (
+        result.username ?? result.items[0]?.username
+      )?.toLowerCase();
+
+      if (resolved) {
+        byUsername.set(resolved, result.items);
+      } else if (result.items.length > 0) {
+        byUsername.set(`token-${byUsername.size}`, result.items);
+      }
+    }
+
+    const missing = INSTAGRAM_PROFILES.filter(
+      (username) => !byUsername.has(username),
+    );
+
+    if (missing.length > 0 && discoverySources[0]) {
+      const source = discoverySources[0];
+      const discovered = await Promise.all(
+        missing.map((username) =>
+          fetchViaBusinessDiscovery(
+            source.base,
+            source.token,
+            source.userId,
+            username,
+          ),
+        ),
+      );
+      missing.forEach((username, index) => {
+        if (discovered[index].length > 0) {
+          byUsername.set(username, discovered[index]);
+        }
       });
     }
 
-    const resolved = (
-      result.username ?? result.items[0]?.username
-    )?.toLowerCase();
+    const groups = INSTAGRAM_PROFILES.map(
+      (username) => byUsername.get(username) ?? [],
+    ).filter((group) => group.length > 0);
 
-    if (resolved) {
-      byUsername.set(resolved, result.items);
-    } else if (result.items.length > 0) {
-      byUsername.set(`token-${byUsername.size}`, result.items);
+    if (groups.length === 0) {
+      return [...byUsername.values()].flat();
     }
-  }
 
-  const missing = INSTAGRAM_PROFILES.filter(
-    (username) => !byUsername.has(username),
-  );
-
-  if (missing.length > 0 && discoverySources[0]) {
-    const source = discoverySources[0];
-    const discovered = await Promise.all(
-      missing.map((username) =>
-        fetchViaBusinessDiscovery(
-          source.base,
-          source.token,
-          source.userId,
-          username,
-        ),
-      ),
-    );
-    missing.forEach((username, index) => {
-      if (discovered[index].length > 0) {
-        byUsername.set(username, discovered[index]);
-      }
-    });
-  }
-
-  const groups = INSTAGRAM_PROFILES.map(
-    (username) => byUsername.get(username) ?? [],
-  ).filter((group) => group.length > 0);
-
-  if (groups.length === 0) {
-    return [...byUsername.values()].flat();
-  }
-
-  return interleave(groups);
-});
+    return interleave(groups);
+  },
+);
 
 export const getHomepageTiles = cache(async (): Promise<MosaicTile[]> => {
   const media = await fetchInstagramMedia();
   if (media.length === 0) {
-    return MOSAIC_TILES.map((tile) => ({ ...tile, kind: "video" as const }));
+    return MOSAIC_TILES;
   }
 
   return MOSAIC_TILES.map((tile, index) => {

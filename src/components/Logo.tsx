@@ -43,7 +43,7 @@ export function Logo({ className = 'h-16 w-auto' }: Props) {
         Capturing All Angles
       </span> */}
       <Image
-        src="/logo.svg"
+        src="/logo-main.svg"
         alt="Logo"
         width={100}
         height={100}
