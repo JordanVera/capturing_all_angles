@@ -20,8 +20,12 @@ export const VIDEOS = [
   "https://storage.yandexcloud.net/laguta/01%20(1).mp4",
 ] as const;
 
+export type MosaicMediaKind = "image" | "video";
+
 export type MosaicTile = {
   src: string;
+  kind?: MosaicMediaKind;
+  poster?: string;
   left: string;
   top: string;
   width: string;
@@ -35,6 +39,7 @@ export type MosaicTile = {
 export const MOSAIC_TILES: MosaicTile[] = [
   {
     src: VIDEOS[0],
+    kind: "video",
     left: "18%",
     top: "8%",
     width: "22%",

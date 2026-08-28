@@ -1,34 +1,26 @@
-import type { Metadata } from "next";
-import { BookingForm } from "@/components/BookingForm";
-import { SiteChrome } from "@/components/SiteChrome";
-import { VIDEOS } from "@/lib/site";
+import type { Metadata } from 'next';
+import { BookingForm } from '@/components/BookingForm';
+import { SiteChrome } from '@/components/SiteChrome';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: "Book a shoot — All Angles",
+  title: 'Book a shoot — All Angles',
   description:
-    "Book a photographer and videographer for editorial, commercial, wedding, or personal work.",
+    'Book a photographer and videographer for editorial, commercial, wedding, or personal work.',
 };
 
 export default function BookPage() {
   return (
     <SiteChrome>
       <main className="relative px-8 pt-36 pb-32 md:pt-40">
-        <div className="pointer-events-none absolute top-[20%] right-[6%] hidden h-[28vh] w-[32vw] md:block">
-          <div
-            className="h-full w-full overflow-hidden"
-            style={{
-              clipPath:
-                "polygon(10% 22%, 42% 4%, 86% 12%, 100% 48%, 84% 92%, 38% 100%, 4% 74%)",
-            }}
-          >
-            <video
-              className="h-full w-full object-cover opacity-80"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-              src={VIDEOS[4]}
+        <div className="pointer-events-none absolute top-[20%] right-[6%] hidden w-[26vw] md:block">
+          <div className="h-full w-full overflow-hidden">
+            <Image
+              src="/woah.jpg"
+              alt="Book"
+              width={100}
+              height={100}
+              className="h-full w-full object-cover"
             />
           </div>
         </div>
@@ -37,16 +29,14 @@ export default function BookPage() {
           <section className="md:col-span-5">
             <h1 className="t-nav">
               book
-              <br />
-              a shoot
+              <br />a shoot
             </h1>
             <p className="mt-8 max-w-sm font-mono text-[1.4rem] leading-[1.4] text-foreground uppercase">
               Photographer and videographer for editorial, commercial, weddings,
-              and personal work. Tell us the frame you need — stills, motion, or both.
+              and personal work. Tell us the frame you need — stills, motion, or
+              both.
             </p>
-            <p className="t-small mt-8 text-muted">
-              reply within 48 hours
-            </p>
+            <p className="t-small mt-8 text-muted">reply within 48 hours</p>
           </section>
 
           <section className="md:col-span-7">

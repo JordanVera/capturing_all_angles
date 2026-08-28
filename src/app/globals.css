@@ -73,7 +73,8 @@ body {
   z-index: 20 !important;
 }
 
-.mosaic-tile video {
+.mosaic-tile video,
+.mosaic-tile img {
   display: block;
 }
 
