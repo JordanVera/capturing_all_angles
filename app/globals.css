@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #f0f0f0;
+  --accent: #ff6122;
+  --muted: #808080;
+}
+
+@theme inline {
+  --color-background: #000000;
+  --color-foreground: #f0f0f0;
+  --color-accent: #ff6122;
+  --color-muted: #808080;
+  --font-sans: "Inter Tight", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  font-size: clamp(10px, 0.72vw + 8.4px, 13px);
+  background: #000;
+  color-scheme: dark;
+}
+
+body {
+  background: #000;
+  color: #f0f0f0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  overflow-x: clip;
+}
+
+.t-nav {
+  font-size: 2rem;
+  line-height: 0.95;
+  text-transform: uppercase;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.t-small {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.field-input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(240, 240, 240, 0.35);
+  padding: 0.8rem 0;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: #f0f0f0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  border-radius: 0;
+  outline: none;
+}
+
+.field-input:focus {
+  border-bottom-color: #ff6122;
+}
+
+.field-input[type="date"] {
+  text-transform: none;
+}
+
+.mosaic-tile {
+  background: #111;
+}
+
+.mosaic-tile:hover {
+  z-index: 20 !important;
+}
+
+.mosaic-tile video {
+  display: block;
+}
+
+@media (min-width: 992px) {
+  body.has-custom-cursor {
+    cursor: none;
+  }
+
+  body.has-custom-cursor header a,
+  body.has-custom-cursor header button,
+  body.has-custom-cursor footer a,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor input,
+  body.has-custom-cursor textarea,
+  body.has-custom-cursor select,
+  body.has-custom-cursor label {
+    cursor: pointer;
+  }
+}
+
+::selection {
+  background: #ff6122;
+  color: #000;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}

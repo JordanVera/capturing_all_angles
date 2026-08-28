@@ -1,0 +1,65 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { BRAND } from "@/lib/site";
+import { PlusMark } from "@/components/PlusMark";
+import { ScrambleText } from "@/components/ScrambleText";
+
+type Props = {
+  menuOpen: boolean;
+  onToggleMenu: () => void;
+};
+
+export function Header({ menuOpen, onToggleMenu }: Props) {
+  const pathname = usePathname();
+  const onBook = pathname.startsWith("/book");
+
+  return (
+    <header className="pointer-events-none fixed top-0 right-0 left-0 z-[2000]">
+      <div className="grid grid-cols-2 items-start px-8 pt-8 md:grid-cols-4">
+        <Link
+          href="/"
+          className="pointer-events-auto relative flex items-start gap-4 text-foreground transition-colors duration-300 hover:text-accent"
+        >
+          <ScrambleText
+            text={`${BRAND.line1}\n${BRAND.line2}`}
+            className="t-nav"
+            delayMs={80}
+          />
+          <span className="mt-1 shrink-0">
+            <PlusMark className="h-[2.4rem] w-[2.4rem]" />
+          </span>
+        </Link>
+
+        <button
+          type="button"
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          onClick={onToggleMenu}
+          className="pointer-events-auto col-start-2 justify-self-end t-nav md:hidden"
+        >
+          <ScrambleText text={menuOpen ? "Close" : "Menu"} hover={false} />
+        </button>
+
+        <nav className="pointer-events-auto hidden flex-col justify-self-start md:col-start-3 md:flex">
+          <span className="t-nav text-foreground">
+            <ScrambleText text="photographer" delayMs={120} />
+          </span>
+          <span className="t-nav text-foreground">
+            <ScrambleText text="videographer" delayMs={160} />
+          </span>
+        </nav>
+
+        <Link
+          href="/book"
+          className={`pointer-events-auto hidden t-nav justify-self-end transition-colors duration-300 hover:text-accent md:block ${
+            onBook ? "text-accent" : "text-foreground"
+          }`}
+        >
+          <ScrambleText text="book" delayMs={200} />
+        </Link>
+      </div>
+    </header>
+  );
+}
