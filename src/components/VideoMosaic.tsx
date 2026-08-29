@@ -12,24 +12,105 @@ const REPULSION_STRENGTH = 110;
 const mediaClassName =
   'h-auto w-full transition-transform duration-500 group-hover:scale-110';
 
-const MOTION_TILES = [
+type MotionClip = {
+  replaceSrc: string;
+  src: string;
+  width: number;
+  height: number;
+  layout?: Pick<MosaicTile, 'left' | 'top' | 'width' | 'rotate' | 'z'>;
+};
+
+const MOTION_TILES: MotionClip[] = [
+  // Featured landscape recaps
   {
     replaceSrc: '/grid-media/10.jpg',
     src: '/mosaic-video/alexis-listening.mp4',
     width: 1280,
     height: 720,
+    layout: { left: '36%', top: '22%', width: '32%', rotate: -3, z: 8 },
   },
   {
     replaceSrc: '/grid-media/14.jpg',
     src: '/mosaic-video/remy-martin.mp4',
     width: 1280,
     height: 720,
+    layout: { left: '6%', top: '50%', width: '30%', rotate: 2, z: 8 },
   },
+  {
+    replaceSrc: '/grid-media/8.jpg',
+    src: '/mosaic-video/clip-P4rv4AhWInQ.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '10%', top: '30%', width: '24%', rotate: -6, z: 7 },
+  },
+  {
+    replaceSrc: '/grid-media/9.jpg',
+    src: '/mosaic-video/clip-bDWAvRikwiw.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '32%', top: '26%', width: '26%', rotate: 2, z: 8 },
+  },
+  {
+    replaceSrc: '/grid-media/13.jpg',
+    src: '/mosaic-video/clip-96ZfEukYlOo.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '0%', top: '52%', width: '24%', rotate: -5, z: 7 },
+  },
+  {
+    replaceSrc: '/grid-media/15.jpg',
+    src: '/mosaic-video/clip-yRV53kGTBaw.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '34%', top: '46%', width: '26%', rotate: -2, z: 8 },
+  },
+  {
+    replaceSrc: '/grid-media/16 .jpg',
+    src: '/mosaic-video/clip-YsHfBTjxD3g.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '48%', top: '48%', width: '24%', rotate: 5, z: 7 },
+  },
+  {
+    replaceSrc: '/grid-media/18.jpg',
+    src: '/mosaic-video/clip-aLNQGNpj7LI.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '0%', top: '76%', width: '26%', rotate: 6, z: 7 },
+  },
+  {
+    replaceSrc: '/grid-media/25.jpg',
+    src: '/mosaic-video/clip-o1hVmbjCUGo.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '18%', top: '38%', width: '22%', rotate: 3, z: 7 },
+  },
+  {
+    replaceSrc: '/grid-media/26.jpg',
+    src: '/mosaic-video/clip-yDcxg-EmYgc.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '40%', top: '35%', width: '24%', rotate: -5, z: 7 },
+  },
+  {
+    replaceSrc: '/grid-media/29.jpg',
+    src: '/mosaic-video/clip-n8YLGwv4pwA.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '58%', top: '60%', width: '22%', rotate: -3, z: 7 },
+  },
+  // Vertical shorts
   {
     replaceSrc: '/grid-media/1.jpg',
     src: '/mosaic-video/short-Is7Q50oSsZM.mp4',
     width: 608,
     height: 1080,
+  },
+  {
+    replaceSrc: '/grid-media/2.jpg',
+    src: '/mosaic-video/clip-z5SV2hInZlw.mp4',
+    width: 360,
+    height: 640,
   },
   {
     replaceSrc: '/grid-media/3.jpg',
@@ -38,10 +119,64 @@ const MOTION_TILES = [
     height: 1080,
   },
   {
+    replaceSrc: '/grid-media/4.jpg',
+    src: '/mosaic-video/clip-gQCqepBY0Nw.mp4',
+    width: 406,
+    height: 720,
+  },
+  {
+    replaceSrc: '/grid-media/5.jpg',
+    src: '/mosaic-video/clip-jt4HyTxove8.mp4',
+    width: 360,
+    height: 640,
+  },
+  {
+    replaceSrc: '/grid-media/6.jpg',
+    src: '/mosaic-video/clip-jYIuct0VG8w.mp4',
+    width: 360,
+    height: 640,
+  },
+  {
+    replaceSrc: '/grid-media/7.jpg',
+    src: '/mosaic-video/clip-kLMK4szjxxo.mp4',
+    width: 350,
+    height: 640,
+  },
+  {
+    replaceSrc: '/grid-media/11.jpg',
+    src: '/mosaic-video/clip-QtGdC6s13go.mp4',
+    width: 360,
+    height: 640,
+  },
+  {
+    replaceSrc: '/grid-media/12.jpg',
+    src: '/mosaic-video/clip-dMfLkneNO0Y.mp4',
+    width: 406,
+    height: 720,
+  },
+  {
+    replaceSrc: '/grid-media/17.jpg',
+    src: '/mosaic-video/clip-WXYZUdqDCm8.mp4',
+    width: 360,
+    height: 640,
+  },
+  {
+    replaceSrc: '/grid-media/19.jpg',
+    src: '/mosaic-video/clip-wcaO7BD_8CA.mp4',
+    width: 360,
+    height: 640,
+  },
+  {
     replaceSrc: '/grid-media/20.jpg',
     src: '/mosaic-video/short-C5YwZuhbgYA.mp4',
     width: 608,
     height: 1080,
+  },
+  {
+    replaceSrc: '/grid-media/21.jpg',
+    src: '/mosaic-video/clip-01otsbxhh2o.mp4',
+    width: 360,
+    height: 640,
   },
   {
     replaceSrc: '/grid-media/22.jpg',
@@ -50,17 +185,33 @@ const MOTION_TILES = [
     height: 1080,
   },
   {
+    replaceSrc: '/grid-media/23.jpg',
+    src: '/mosaic-video/clip-OWJfMyUwyhE.mp4',
+    width: 360,
+    height: 640,
+  },
+  {
+    replaceSrc: '/grid-media/24.jpg',
+    src: '/mosaic-video/clip-DG5d1xR-iTk.mp4',
+    width: 360,
+    height: 640,
+  },
+  {
+    replaceSrc: '/grid-media/27.jpg',
+    src: '/mosaic-video/clip-_ANWQ3TQ3LE.mp4',
+    width: 406,
+    height: 720,
+  },
+  {
     replaceSrc: '/grid-media/28.jpg',
     src: '/mosaic-video/short-3-ZQpHKLvM0.mp4',
     width: 480,
     height: 854,
   },
-] as const;
+];
 
 function tilesWithMotion(tiles: MosaicTile[]): MosaicTile[] {
-  const bySrc = new Map<string, (typeof MOTION_TILES)[number]>(
-    MOTION_TILES.map((clip) => [clip.replaceSrc, clip]),
-  );
+  const bySrc = new Map(MOTION_TILES.map((clip) => [clip.replaceSrc, clip]));
 
   return tiles.map((tile) => {
     const clip = bySrc.get(tile.src);
@@ -68,6 +219,7 @@ function tilesWithMotion(tiles: MosaicTile[]): MosaicTile[] {
 
     return {
       ...tile,
+      ...(clip.layout ?? {}),
       src: clip.src,
       kind: 'video' as const,
       intrinsicWidth: clip.width,
