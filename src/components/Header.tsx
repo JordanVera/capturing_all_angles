@@ -38,16 +38,16 @@ export function Header({ menuOpen, onToggleMenu }: Props) {
 
         <nav className="pointer-events-auto hidden flex-col justify-self-start md:col-start-3 md:flex">
           <Link
-            href="/photography"
-            className={`t-nav transition-colors duration-300 hover:text-accent ${onPhoto ? 'text-accent' : 'text-foreground'}`}
-          >
-            <ScrambleText text="photographer" delayMs={120} />
-          </Link>
-          <Link
             href="/videography"
             className={`t-nav transition-colors duration-300 hover:text-accent ${onVideo ? 'text-accent' : 'text-foreground'}`}
           >
             <ScrambleText text="videographer" delayMs={160} />
+          </Link>
+          <Link
+            href="/photography"
+            className={`t-nav transition-colors duration-300 hover:text-accent ${onPhoto ? 'text-accent' : 'text-foreground'}`}
+          >
+            <ScrambleText text="photographer" delayMs={120} />
           </Link>
         </nav>
 

@@ -14,9 +14,9 @@ export function Logo({ className = 'h-16 w-auto' }: Props) {
       <Image
         src="/logo-white.png"
         alt="Logo"
-        width={100}
-        height={100}
-        className="h-16 w-auto"
+        width={272}
+        height={136}
+        className={className}
       />
     </span>
   );

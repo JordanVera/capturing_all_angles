@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { BookingForm } from '@/components/BookingForm';
+import { PricingSidebar } from '@/components/PricingSidebar';
 import { SiteChrome } from '@/components/SiteChrome';
 import Image from 'next/image';
 
@@ -26,7 +27,7 @@ export default function BookPage() {
         </div>
 
         <div className="relative grid max-w-6xl gap-16 md:grid-cols-12">
-          <section className="md:col-span-5">
+          <section className="no-scrollbar md:sticky md:top-36 md:col-span-5 md:max-h-[calc(100dvh-17rem)] md:overflow-y-auto md:pr-4">
             <h1 className="t-nav">
               book
               <br />a shoot
@@ -37,10 +38,17 @@ export default function BookPage() {
               both.
             </p>
             <p className="t-small mt-8 text-muted">reply within 48 hours</p>
+            <div className="hidden md:block">
+              <PricingSidebar />
+            </div>
           </section>
 
           <section className="md:col-span-7">
             <BookingForm />
+          </section>
+
+          <section className="md:hidden">
+            <PricingSidebar />
           </section>
         </div>
       </main>
