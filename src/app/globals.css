@@ -118,6 +118,24 @@ body {
   }
 }
 
+.aperture-ticks {
+  transform-box: view-box;
+  transform-origin: 100px 100px;
+  animation: aperture-spin 64s linear infinite;
+}
+
+@keyframes aperture-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aperture-ticks {
+    animation: none;
+  }
+}
+
 .gallery-tile {
   animation: gallery-fade-in 0.55s ease-out both;
 }
