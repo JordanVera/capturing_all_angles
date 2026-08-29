@@ -17,12 +17,6 @@ const PORTRAITS = {
     width: 1440,
     height: 1800,
   },
-  portrait: {
-    src: '/images/woah/3.jpg',
-    alt: 'Chris Theriot, black and white portrait',
-    width: 455,
-    height: 633,
-  },
 } as const;
 
 const imageFrame =
@@ -84,10 +78,10 @@ export function AboutContent() {
           >
             <div className={imageFrame}>
               <Image
-                src={PORTRAITS.portrait.src}
-                alt={PORTRAITS.portrait.alt}
-                width={PORTRAITS.portrait.width}
-                height={PORTRAITS.portrait.height}
+                src={PORTRAITS.hero.src}
+                alt={PORTRAITS.hero.alt}
+                width={PORTRAITS.hero.width}
+                height={PORTRAITS.hero.height}
                 className="block h-auto w-full transition-transform duration-700 group-hover:scale-[1.03]"
                 sizes="(max-width: 768px) 46vw, 24vw"
               />
