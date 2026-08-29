@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { MOSAIC_TILES, mosaicMediaKind, type MosaicTile } from '@/lib/site';
 
@@ -12,11 +12,212 @@ const REPULSION_STRENGTH = 110;
 const mediaClassName =
   'h-auto w-full transition-transform duration-500 group-hover:scale-110';
 
+const MOTION_CLIP = {
+  videoId: 'Zyy1oTdGyCQ',
+  start: 18,
+  end: 24,
+  /** Landscape still this clip replaces in the collage. */
+  replaceSrc: '/grid-media/10.jpg',
+} as const;
+
+const YT_API_SRC = 'https://www.youtube.com/iframe_api';
+const YT_ENDED = 0;
+
+type YouTubePlayer = {
+  destroy: () => void;
+  mute: () => void;
+  playVideo: () => void;
+  seekTo: (seconds: number, allowSeekAhead: boolean) => void;
+  getCurrentTime: () => number;
+  getPlayerState: () => number;
+};
+
+type YouTubePlayerEvent = {
+  data: number;
+  target: YouTubePlayer;
+};
+
+declare global {
+  interface Window {
+    YT?: {
+      Player: new (
+        target: HTMLElement,
+        options: {
+          videoId: string;
+          width: string;
+          height: string;
+          host: string;
+          playerVars: Record<string, string | number>;
+          events: {
+            onReady: (event: YouTubePlayerEvent) => void;
+            onStateChange: (event: YouTubePlayerEvent) => void;
+          };
+        },
+      ) => YouTubePlayer;
+    };
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+function loadYouTubeApi(): Promise<void> {
+  if (window.YT?.Player) return Promise.resolve();
+
+  return new Promise((resolve) => {
+    const previous = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      previous?.();
+      resolve();
+    };
+
+    if (!document.querySelector(`script[src="${YT_API_SRC}"]`)) {
+      const tag = document.createElement('script');
+      tag.src = YT_API_SRC;
+      tag.async = true;
+      document.head.appendChild(tag);
+    }
+  });
+}
+
+function MosaicYouTubeClip({
+  videoId,
+  start,
+  end,
+}: {
+  videoId: string;
+  start: number;
+  end: number;
+}) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<YouTubePlayer | null>(null);
+  const pollRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const box = boxRef.current;
+    if (!box) return;
+
+    let cancelled = false;
+
+    const clearPoll = () => {
+      if (pollRef.current !== null) {
+        window.clearInterval(pollRef.current);
+        pollRef.current = null;
+      }
+    };
+
+    const restartClip = (player: YouTubePlayer) => {
+      player.seekTo(start, true);
+      player.playVideo();
+    };
+
+    const attach = async () => {
+      await loadYouTubeApi();
+      if (cancelled || !boxRef.current || !window.YT?.Player) return;
+
+      boxRef.current.replaceChildren();
+      const target = document.createElement('div');
+      target.className = 'h-full w-full';
+      boxRef.current.appendChild(target);
+
+      const player = new window.YT.Player(target, {
+        videoId,
+        width: '100%',
+        height: '100%',
+        host: 'https://www.youtube-nocookie.com',
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          rel: 0,
+          iv_load_policy: 3,
+          cc_load_policy: 0,
+          start,
+          origin: window.location.origin,
+        },
+        events: {
+          onReady: (event) => {
+            if (cancelled) return;
+            event.target.mute();
+            restartClip(event.target);
+            clearPoll();
+            pollRef.current = window.setInterval(() => {
+              const current = event.target.getCurrentTime?.() ?? 0;
+              const state = event.target.getPlayerState?.();
+              if (
+                current < start - 0.05 ||
+                current >= end - 0.15 ||
+                state === YT_ENDED
+              ) {
+                restartClip(event.target);
+              }
+            }, 150);
+          },
+          onStateChange: (event) => {
+            if (event.data === YT_ENDED) restartClip(event.target);
+          },
+        },
+      });
+
+      playerRef.current = player;
+    };
+
+    void attach();
+
+    return () => {
+      cancelled = true;
+      clearPoll();
+      try {
+        playerRef.current?.destroy();
+      } catch {
+        // iframe may already be gone
+      }
+      playerRef.current = null;
+    };
+  }, [videoId, start, end]);
+
+  return (
+    <div
+      className={`${mediaClassName} relative aspect-video overflow-hidden bg-black`}
+    >
+      <div
+        ref={boxRef}
+        className="pointer-events-none absolute inset-0 scale-[1.35]"
+        aria-hidden
+      />
+    </div>
+  );
+}
+
+function tilesWithMotion(tiles: MosaicTile[]): MosaicTile[] {
+  const match = tiles.findIndex((tile) => tile.src === MOTION_CLIP.replaceSrc);
+  const swapAt =
+    match >= 0 ? match : Math.min(9, Math.max(tiles.length - 1, 0));
+  if (tiles.length === 0) return tiles;
+
+  return tiles.map((tile, index) =>
+    index === swapAt
+      ? {
+          ...tile,
+          src: `https://www.youtube.com/watch?v=${MOTION_CLIP.videoId}`,
+          kind: 'video',
+        }
+      : tile,
+  );
+}
+
+function isYouTubeSrc(src: string) {
+  return src.includes('youtube.com') || src.includes('youtu.be');
+}
+
 export function VideoMosaic({
   tiles = MOSAIC_TILES,
 }: {
   tiles?: MosaicTile[];
 }) {
+  const displayTiles = useMemo(() => tilesWithMotion(tiles), [tiles]);
   const gridRef = useRef<HTMLDivElement>(null);
   const tileRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mouseRef = useRef<{ x: number; y: number } | null>(null);
@@ -30,7 +231,7 @@ export function VideoMosaic({
     const rect = grid.getBoundingClientRect();
     const mouse = mouseRef.current;
 
-    tiles.forEach((tile, i) => {
+    displayTiles.forEach((tile, i) => {
       const el = tileRefs.current[i];
       if (!el) return;
 
@@ -62,7 +263,7 @@ export function VideoMosaic({
       // translate() comes first so the push is in screen-space, not rotated-space.
       el.style.transform = `translate(${dx}px, ${dy}px) rotate(${tile.rotate}deg)`;
     });
-  }, [tiles]);
+  }, [displayTiles]);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -87,8 +288,11 @@ export function VideoMosaic({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div ref={gridRef} className="relative aspect-11/7 w-full min-w-[700px] md:min-w-0 max-w-275">
-        {tiles.map((tile, index) => {
+      <div
+        ref={gridRef}
+        className="relative aspect-11/7 w-full min-w-[700px] md:min-w-0 max-w-275"
+      >
+        {displayTiles.map((tile, index) => {
           const kind = mosaicMediaKind(tile.src, tile.kind);
 
           return (
@@ -109,7 +313,13 @@ export function VideoMosaic({
                 willChange: 'transform',
               }}
             >
-              {kind === 'image' ? (
+              {isYouTubeSrc(tile.src) ? (
+                <MosaicYouTubeClip
+                  videoId={MOTION_CLIP.videoId}
+                  start={MOTION_CLIP.start}
+                  end={MOTION_CLIP.end}
+                />
+              ) : kind === 'image' ? (
                 <Image
                   src={tile.src}
                   alt=""

@@ -10,7 +10,7 @@ export function PricingSidebar() {
           <details
             key={section.id}
             className="group border-b border-white/20"
-            open={section.id === 'photography'}
+            // All details sections are now closed by default (no open prop)
           >
             <summary
               data-hover-sound
@@ -21,7 +21,10 @@ export function PricingSidebar() {
                 {section.from ? (
                   <span className="t-small text-muted">{section.from}</span>
                 ) : null}
-                <span aria-hidden className="t-small w-4 text-center text-muted">
+                <span
+                  aria-hidden
+                  className="t-small w-4 text-center text-muted"
+                >
                   <span className="group-open:hidden">+</span>
                   <span className="hidden group-open:inline">–</span>
                 </span>

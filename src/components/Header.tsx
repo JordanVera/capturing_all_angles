@@ -41,13 +41,13 @@ export function Header({ menuOpen, onToggleMenu }: Props) {
             href="/videography"
             className={`t-nav transition-colors duration-300 hover:text-accent ${onVideo ? 'text-accent' : 'text-foreground'}`}
           >
-            <ScrambleText text="videographer" delayMs={160} />
+            <ScrambleText text="videography" delayMs={160} />
           </Link>
           <Link
             href="/photography"
             className={`t-nav transition-colors duration-300 hover:text-accent ${onPhoto ? 'text-accent' : 'text-foreground'}`}
           >
-            <ScrambleText text="photographer" delayMs={120} />
+            <ScrambleText text="photography" delayMs={120} />
           </Link>
         </nav>
 

@@ -18,6 +18,9 @@ const interTight = Inter_Tight({
 export const metadata: Metadata = {
   title: BRAND.title,
   description: BRAND.description,
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
@@ -26,6 +29,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       lang="en"
       className={`${plexMono.variable} ${interTight.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body
         className={`${plexMono.className} min-h-full bg-black text-foreground`}
       >
