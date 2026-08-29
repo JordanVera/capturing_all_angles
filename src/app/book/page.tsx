@@ -17,7 +17,7 @@ export default function BookPage() {
         <div className="pointer-events-none absolute top-[20%] right-[6%] hidden w-[26vw] md:block">
           <div className="h-full w-full overflow-hidden">
             <Image
-              src="/woah.jpg"
+              src="/images/woah/1.jpg"
               alt="Book"
               width={100}
               height={100}
