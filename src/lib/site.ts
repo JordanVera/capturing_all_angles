@@ -16,6 +16,10 @@ export const SOCIAL = [
     label: 'facebook',
     href: 'https://www.facebook.com/CapturingAllAngles/',
   },
+  {
+    label: 'Youtube',
+    href: 'https://www.youtube.com/@capturingallangles8522',
+  },
 ] as const;
 
 export type MosaicMediaKind = 'image' | 'video';
