@@ -11,7 +11,7 @@ export function Footer() {
           href="/book"
           className="pointer-events-auto t-small text-muted transition-colors duration-300 hover:text-accent"
         >
-          <ScrambleText text="film + stills" delayMs={240} />
+          <ScrambleText text="website by" linkText="Jordan Vera" href="https://www.jordanvera.com" delayMs={240} />
         </Link>
         <p className="pointer-events-auto t-small text-muted md:col-start-2">
           <ScrambleText text="videography" delayMs={280} />

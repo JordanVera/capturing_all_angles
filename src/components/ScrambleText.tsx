@@ -1,25 +1,28 @@
-"use client";
+'use client';
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import Link from 'next/link';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 function scrambleFrame(source: string, progress: number) {
   return source
-    .split("")
+    .split('')
     .map((char, index) => {
-      if (char === " " || char === "\n") return char;
+      if (char === ' ' || char === '\n') return char;
       const settle = index / Math.max(source.length, 1);
       if (progress > settle + 0.15) return char;
       return GLYPHS[Math.floor(Math.random() * GLYPHS.length)] ?? char;
     })
-    .join("");
+    .join('');
 }
 
 type Props = {
   text: string;
+  linkText?: string;
+  href?: string;
   className?: string;
-  as?: "span" | "div";
+  as?: 'span' | 'div';
   hover?: boolean;
   delayMs?: number;
 };
@@ -27,7 +30,9 @@ type Props = {
 export function ScrambleText({
   text,
   className,
-  as: Tag = "span",
+  linkText,
+  href,
+  as: Tag = 'span',
   hover = true,
   delayMs = 0,
 }: Props) {
@@ -69,7 +74,7 @@ export function ScrambleText({
     };
   }, [delayMs, run]);
 
-  const lines = display.split("\n");
+  const lines = display.split('\n');
 
   return (
     <Tag
@@ -77,12 +82,17 @@ export function ScrambleText({
       onMouseEnter={() => {
         if (hover) run();
       }}
-      style={{ visibility: ready ? "visible" : "hidden" }}
+      style={{ visibility: ready ? 'visible' : 'hidden' }}
     >
       {lines.map((line, i) => (
         <span key={`${line}-${i}`}>
           {i > 0 ? <br /> : null}
-          {line}
+          {line}{' '}
+          {linkText && href && (
+            <Link href={href} className="underline">
+              {linkText}
+            </Link>
+          )}
         </span>
       ))}
     </Tag>
