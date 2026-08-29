@@ -13,6 +13,8 @@ type Props = {
 export function Header({ menuOpen, onToggleMenu }: Props) {
   const pathname = usePathname();
   const onBook = pathname.startsWith('/book');
+  const onPhoto = pathname.startsWith('/photography');
+  const onVideo = pathname.startsWith('/videography');
 
   return (
     <header className="pointer-events-none fixed top-0 right-0 left-0 z-[2000]">
@@ -35,12 +37,18 @@ export function Header({ menuOpen, onToggleMenu }: Props) {
         </button>
 
         <nav className="pointer-events-auto hidden flex-col justify-self-start md:col-start-3 md:flex">
-          <span className="t-nav text-foreground">
+          <Link
+            href="/photography"
+            className={`t-nav transition-colors duration-300 hover:text-accent ${onPhoto ? 'text-accent' : 'text-foreground'}`}
+          >
             <ScrambleText text="photographer" delayMs={120} />
-          </span>
-          <span className="t-nav text-foreground">
+          </Link>
+          <Link
+            href="/videography"
+            className={`t-nav transition-colors duration-300 hover:text-accent ${onVideo ? 'text-accent' : 'text-foreground'}`}
+          >
             <ScrambleText text="videographer" delayMs={160} />
-          </span>
+          </Link>
         </nav>
 
         <Link

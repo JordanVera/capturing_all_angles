@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -25,10 +24,12 @@ type Props = {
   as?: 'span' | 'div';
   hover?: boolean;
   delayMs?: number;
+  size?: 'small' | 'medium' | 'large';
 };
 
 export function ScrambleText({
   text,
+  size = 'medium',
   className,
   linkText,
   href,
@@ -85,13 +86,23 @@ export function ScrambleText({
       style={{ visibility: ready ? 'visible' : 'hidden' }}
     >
       {lines.map((line, i) => (
-        <span key={`${line}-${i}`}>
+        <span
+          key={`${line}-${i}`}
+          className={
+            size === 'small' ? 'text-xs' : size === 'large' ? 'text-lg' : ''
+          }
+        >
           {i > 0 ? <br /> : null}
           {line}{' '}
           {linkText && href && (
-            <Link href={href} className="underline">
+            <a
+              className="underline"
+              rel="noopener noreferrer"
+              target="_blank"
+              href={href}
+            >
               {linkText}
-            </Link>
+            </a>
           )}
         </span>
       ))}

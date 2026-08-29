@@ -17,10 +17,16 @@ export function MobileMenu({ open, onClose }: Props) {
     >
       <nav className="flex h-full flex-col justify-between px-8 pt-28 pb-24">
         <div className="flex flex-col gap-4">
-          <Link href="/" onClick={onClose} className="t-nav text-foreground">
+          <Link href="/" onClick={onClose} className="t-nav text-foreground transition-colors duration-300 hover:text-accent">
             home
           </Link>
-          <Link href="/book" onClick={onClose} className="t-nav text-foreground">
+          <Link href="/photography" onClick={onClose} className="t-nav text-foreground transition-colors duration-300 hover:text-accent">
+            photography
+          </Link>
+          <Link href="/videography" onClick={onClose} className="t-nav text-foreground transition-colors duration-300 hover:text-accent">
+            videography
+          </Link>
+          <Link href="/book" onClick={onClose} className="t-nav text-foreground transition-colors duration-300 hover:text-accent">
             book
           </Link>
         </div>

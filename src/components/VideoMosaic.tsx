@@ -83,11 +83,11 @@ export function VideoMosaic({
 
   return (
     <div
-      className="flex min-h-dvh items-center justify-center overflow-hidden px-4 py-20 md:px-8"
+      className="mosaic-scroll-container flex min-h-dvh items-center justify-center overflow-x-auto md:overflow-hidden py-20 md:px-8"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div ref={gridRef} className="relative aspect-11/7 w-full max-w-275">
+      <div ref={gridRef} className="relative aspect-11/7 w-full min-w-[700px] md:min-w-0 max-w-275">
         {tiles.map((tile, index) => {
           const kind = mosaicMediaKind(tile.src, tile.kind);
 

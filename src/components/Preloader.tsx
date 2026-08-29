@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useEffect } from "react";
+import Image from 'next/image';
+import { useEffect } from 'react';
 
 const DURATION = 2500;
 
@@ -21,13 +21,13 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       <div className="preloader-logo-stage">
         <div className="preloader-logo">
           <Image
-            src="/logo-main.svg"
+            src="/logo-white.png"
             alt=""
             width={272}
             height={136}
             priority
             loading="eager"
-            className="h-auto w-[min(78vw,32rem)]"
+            className="h-auto w-[min(60vw,32rem)]"
           />
         </div>
       </div>

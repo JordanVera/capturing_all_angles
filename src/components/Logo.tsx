@@ -12,7 +12,7 @@ export function Logo({ className = 'h-16 w-auto' }: Props) {
       aria-label="CAA — Capturing All Angles"
     >
       <Image
-        src="/logo-main.svg"
+        src="/logo-white.png"
         alt="Logo"
         width={100}
         height={100}
