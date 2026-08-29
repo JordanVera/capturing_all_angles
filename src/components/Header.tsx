@@ -12,6 +12,7 @@ type Props = {
 
 export function Header({ menuOpen, onToggleMenu }: Props) {
   const pathname = usePathname();
+  const onAbout = pathname.startsWith('/about');
   const onBook = pathname.startsWith('/book');
   const onPhoto = pathname.startsWith('/photography');
   const onVideo = pathname.startsWith('/videography');
@@ -35,6 +36,15 @@ export function Header({ menuOpen, onToggleMenu }: Props) {
         >
           <ScrambleText text={menuOpen ? 'Close' : 'Menu'} hover={false} />
         </button>
+
+        <Link
+          href="/about"
+          className={`pointer-events-auto hidden t-nav justify-self-start transition-colors duration-300 hover:text-accent md:col-start-2 md:block ${
+            onAbout ? 'text-accent' : 'text-foreground'
+          }`}
+        >
+          <ScrambleText text="about" delayMs={80} />
+        </Link>
 
         <nav className="pointer-events-auto hidden flex-col justify-self-start md:col-start-3 md:flex">
           <Link

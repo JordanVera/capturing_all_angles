@@ -17,12 +17,20 @@ export function Footer() {
             size="small"
           />
         </p>
-        <Link
-          href="/videography"
-          className="pointer-events-auto hidden t-small text-muted transition-colors duration-300 hover:text-accent md:col-start-2 md:block"
-        >
-          <ScrambleText text="videography" delayMs={280} />
-        </Link>
+        <nav className="pointer-events-auto hidden flex-col gap-1 md:col-start-2 md:flex">
+          <Link
+            href="/videography"
+            className="t-small text-muted transition-colors duration-300 hover:text-accent"
+          >
+            <ScrambleText text="videography" delayMs={280} />
+          </Link>
+          <Link
+            href="/about"
+            className="t-small text-muted transition-colors duration-300 hover:text-accent"
+          >
+            <ScrambleText text="about" delayMs={300} />
+          </Link>
+        </nav>
         <nav className="pointer-events-auto hidden flex-col gap-1 md:col-start-3 md:flex">
           {SOCIAL.map((item, index) => (
             <a
@@ -43,6 +51,12 @@ export function Footer() {
           <ScrambleText text="photography" delayMs={380} />
         </Link>
         <nav className="pointer-events-auto flex flex-col items-end gap-1 md:hidden">
+          <Link
+            href="/about"
+            className="t-small text-muted transition-colors duration-300 hover:text-accent"
+          >
+            <ScrambleText text="about" delayMs={260} />
+          </Link>
           <Link
             href="/videography"
             className="t-small text-muted transition-colors duration-300 hover:text-accent"

@@ -25,6 +25,13 @@ export function MobileMenu({ open, onClose }: Props) {
             home
           </Link>
           <Link
+            href="/about"
+            onClick={onClose}
+            className="t-nav text-foreground transition-colors duration-300 hover:text-accent"
+          >
+            about
+          </Link>
+          <Link
             href="/photography"
             onClick={onClose}
             className="t-nav text-foreground transition-colors duration-300 hover:text-accent"
