@@ -19,114 +19,72 @@ type MotionClip = {
 const MOTION_TILES: MotionClip[] = [
   // ── Row 1 ──────────────────────────────────────────────
   {
-    src: '/mosaic-video/short-Is7Q50oSsZM.mp4',
-    width: 608,
-    height: 1080,
-    layout: { left: '0%', top: '1%', width: '13%', rotate: -3, z: 4 },
-  },
-  {
-    src: '/mosaic-video/short-Z2U-zW3fsDY.mp4',
-    width: 608,
-    height: 1080,
-    layout: { left: '13%', top: '-1%', width: '13%', rotate: 4, z: 5 },
-  },
-  {
     src: '/mosaic-video/alexis-listening.mp4',
     width: 1280,
     height: 720,
-    layout: { left: '26%', top: '3%', width: '23%', rotate: -2, z: 8 },
+    layout: { left: '-1%', top: '-2%', width: '26%', rotate: -3, z: 5 },
   },
   {
     src: '/mosaic-video/clip-n8YLGwv4pwA.mp4',
     width: 1280,
     height: 720,
-    layout: { left: '50%', top: '1%', width: '21%', rotate: 2, z: 6 },
-  },
-  {
-    src: '/mosaic-video/short-C5YwZuhbgYA.mp4',
-    width: 608,
-    height: 1080,
-    layout: { left: '72%', top: '2%', width: '13%', rotate: -4, z: 5 },
+    layout: { left: '24%', top: '1%', width: '25%', rotate: 2, z: 7 },
   },
   {
     src: '/mosaic-video/clip-96ZfEukYlOo.mp4',
     width: 1280,
     height: 720,
-    layout: { left: '85%', top: '0%', width: '15%', rotate: 3, z: 4 },
+    layout: { left: '49%', top: '-1%', width: '26%', rotate: -2, z: 6 },
+  },
+  {
+    src: '/mosaic-video/clip-YsHfBTjxD3g.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '75%', top: '2%', width: '25%', rotate: 3, z: 5 },
   },
   // ── Row 2 ──────────────────────────────────────────────
   {
     src: '/mosaic-video/remy-martin.mp4',
     width: 1280,
     height: 720,
-    layout: { left: '-1%', top: '34%', width: '23%', rotate: 2, z: 7 },
-  },
-  {
-    src: '/mosaic-video/short-jxhiBleq508.mp4',
-    width: 608,
-    height: 1080,
-    layout: { left: '23%', top: '31%', width: '13%', rotate: -4, z: 4 },
+    layout: { left: '0%', top: '28%', width: '26%', rotate: 2, z: 7 },
   },
   {
     src: '/mosaic-video/clip-bDWAvRikwiw.mp4',
     width: 1280,
     height: 720,
-    layout: { left: '37%', top: '35%', width: '22%', rotate: -3, z: 6 },
-  },
-  {
-    src: '/mosaic-video/clip-jYIuct0VG8w.mp4',
-    width: 360,
-    height: 640,
-    layout: { left: '60%', top: '32%', width: '13%', rotate: 4, z: 5 },
-  },
-  {
-    src: '/mosaic-video/clip-o1hVmbjCUGo.mp4',
-    width: 1280,
-    height: 720,
-    layout: { left: '74%', top: '34%', width: '20%', rotate: -2, z: 6 },
-  },
-  {
-    src: '/mosaic-video/clip-yDcxg-EmYgc.mp4',
-    width: 1280,
-    height: 720,
-    layout: { left: '91%', top: '31%', width: '14%', rotate: 4, z: 4 },
-  },
-  // ── Row 3 ──────────────────────────────────────────────
-  {
-    src: '/mosaic-video/clip-QtGdC6s13go.mp4',
-    width: 360,
-    height: 640,
-    layout: { left: '0%', top: '66%', width: '12%', rotate: 3, z: 4 },
+    layout: { left: '25%', top: '31%', width: '25%', rotate: -3, z: 6 },
   },
   {
     src: '/mosaic-video/clip-P4rv4AhWInQ.mp4',
     width: 1280,
     height: 720,
-    layout: { left: '13%', top: '63%', width: '22%', rotate: -3, z: 6 },
+    layout: { left: '50%', top: '28%', width: '26%', rotate: 3, z: 8 },
   },
   {
-    src: '/mosaic-video/clip-jt4HyTxove8.mp4',
-    width: 360,
-    height: 640,
-    layout: { left: '36%', top: '67%', width: '12%', rotate: 2, z: 5 },
+    src: '/mosaic-video/clip-o1hVmbjCUGo.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '76%', top: '32%', width: '24%', rotate: -2, z: 5 },
   },
+  // ── Row 3 ──────────────────────────────────────────────
   {
     src: '/mosaic-video/clip-yRV53kGTBaw.mp4',
     width: 1280,
     height: 720,
-    layout: { left: '49%', top: '64%', width: '22%', rotate: 3, z: 6 },
+    layout: { left: '2%', top: '58%', width: '30%', rotate: -2, z: 6 },
   },
   {
-    src: '/mosaic-video/clip-DG5d1xR-iTk.mp4',
-    width: 360,
-    height: 640,
-    layout: { left: '72%', top: '66%', width: '12%', rotate: -4, z: 5 },
+    src: '/mosaic-video/clip-yDcxg-EmYgc.mp4',
+    width: 1280,
+    height: 720,
+    layout: { left: '34%', top: '61%', width: '30%', rotate: 3, z: 7 },
   },
   {
     src: '/mosaic-video/clip-aLNQGNpj7LI.mp4',
     width: 1280,
     height: 720,
-    layout: { left: '85%', top: '63%', width: '15%', rotate: 4, z: 7 },
+    layout: { left: '67%', top: '57%', width: '31%', rotate: -3, z: 6 },
   },
 ];
 
@@ -252,7 +210,7 @@ export function VideoMosaic() {
 
   return (
     <div
-      className="mosaic-scroll-container flex min-h-dvh items-center justify-center overflow-x-auto md:overflow-hidden py-20 md:px-8"
+      className="mosaic-scroll-container mt-24 flex min-h-dvh items-center justify-center overflow-x-auto md:overflow-hidden py-20 md:px-8"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
