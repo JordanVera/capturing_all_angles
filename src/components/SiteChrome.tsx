@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { HoverSound } from '@/components/HoverSound';
 import { MobileMenu } from '@/components/MobileMenu';
+import { MosaicLoadProvider } from '@/components/MosaicLoadContext';
 import { Preloader } from '@/components/Preloader';
 
 let hasBooted = false;
@@ -27,7 +28,7 @@ export function SiteChrome({
     setBooting(false);
   }, []);
 
-  return (
+  const chrome = (
     <div
       className={`relative min-h-[100dvh] bg-black text-foreground ${
         lockScroll ? 'overflow-x-clip md:overflow-hidden' : ''
@@ -44,4 +45,10 @@ export function SiteChrome({
       <Footer />
     </div>
   );
+
+  if (showPreloader) {
+    return <MosaicLoadProvider>{chrome}</MosaicLoadProvider>;
+  }
+
+  return chrome;
 }

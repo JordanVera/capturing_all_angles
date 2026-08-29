@@ -1,33 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-
-const DURATION = 2500;
+import { useEffect } from 'react';
+import { useMosaicLoad } from '@/components/MosaicLoadContext';
 
 export function Preloader({ onDone }: { onDone: () => void }) {
-  const [progress, setProgress] = useState(0);
+  const { progress, complete } = useMosaicLoad();
 
   useEffect(() => {
-    const started = performance.now();
-    let frame = 0;
-
-    const tick = (now: number) => {
-      const next = Math.min(
-        Math.round(((now - started) / DURATION) * 100),
-        100,
-      );
-      setProgress(next);
-      if (next < 100) {
-        frame = window.requestAnimationFrame(tick);
-      } else {
-        onDone();
-      }
-    };
-
-    frame = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(frame);
-  }, [onDone]);
+    if (complete) onDone();
+  }, [complete, onDone]);
 
   return (
     <div
