@@ -7,6 +7,17 @@ export const BRAND = {
     'Videographer and photographer available for editorial, commercial, and personal work. Book a shoot.',
 };
 
+export const SOCIAL = [
+  {
+    label: 'instagram',
+    href: 'https://www.instagram.com/capturingallangles',
+  },
+  {
+    label: 'facebook',
+    href: 'https://www.facebook.com/CapturingAllAngles/',
+  },
+] as const;
+
 export type MosaicMediaKind = 'image' | 'video';
 
 export type MosaicTile = {
