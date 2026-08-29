@@ -47,31 +47,47 @@ const GRID_INTRINSICS: Record<string, { width: number; height: number }> = {
   '12.jpg': { width: 1440, height: 1800 },
   '13.jpg': { width: 1440, height: 1800 },
   '14.jpg': { width: 1440, height: 960 },
+  '15.jpg': { width: 1440, height: 1440 },
+  '16.jpg': { width: 1440, height: 1636 },
+  '17.jpg': { width: 1440, height: 1800 },
+  '18.jpg': { width: 1440, height: 959 },
+  '19.jpg': { width: 720, height: 900 },
+  '20.jpg': { width: 720, height: 1280 },
+  '21.jpg': { width: 3376, height: 6000 },
+  '22.jpg': { width: 720, height: 1280 },
 };
 
-/** Scattered collage slots — extra slots absorb videos dropped into grid-media. */
+/** 22 dense collage slots — 4 overlapping rows, sized close to original. */
 const GRID_LAYOUTS: Pick<
   MosaicTile,
   'left' | 'top' | 'width' | 'rotate' | 'z'
 >[] = [
-  { left: '8%', top: '4%', width: '12%', rotate: -7, z: 3 },
-  { left: '24%', top: '2%', width: '16%', rotate: 4, z: 5 },
-  { left: '44%', top: '8%', width: '11%', rotate: -3, z: 2 },
-  { left: '58%', top: '3%', width: '14%', rotate: 8, z: 4 },
-  { left: '76%', top: '6%', width: '14%', rotate: -5, z: 3 },
-  { left: '3%', top: '36%', width: '15%', rotate: 6, z: 4 },
-  { left: '22%', top: '40%', width: '15%', rotate: -8, z: 6 },
-  { left: '41%', top: '34%', width: '16%', rotate: 2, z: 7 },
-  { left: '61%', top: '38%', width: '14%', rotate: -4, z: 5 },
-  { left: '78%', top: '36%', width: '18%', rotate: 5, z: 4 },
-  { left: '8%', top: '68%', width: '14%', rotate: -6, z: 3 },
-  { left: '28%', top: '70%', width: '14%', rotate: 7, z: 5 },
-  { left: '48%', top: '66%', width: '14%', rotate: -3, z: 4 },
-  { left: '66%', top: '72%', width: '20%', rotate: 4, z: 6 },
-  { left: '16%', top: '20%', width: '12%', rotate: 10, z: 8 },
-  { left: '70%', top: '18%', width: '13%', rotate: -12, z: 8 },
-  { left: '36%', top: '56%', width: '12%', rotate: 9, z: 8 },
-  { left: '54%', top: '18%', width: '11%', rotate: -9, z: 1 },
+  // Row 1 — top ~2–8%
+  { left: '1%',  top: '4%',  width: '14%', rotate: -7,  z: 3 },
+  { left: '16%', top: '2%',  width: '18%', rotate: 4,   z: 5 },
+  { left: '36%', top: '7%',  width: '12%', rotate: -3,  z: 2 },
+  { left: '50%', top: '3%',  width: '15%', rotate: 8,   z: 4 },
+  { left: '67%', top: '5%',  width: '14%', rotate: -5,  z: 3 },
+  { left: '82%', top: '2%',  width: '14%', rotate: 6,   z: 2 },
+  // Row 2 — top ~24–33%
+  { left: '0%',  top: '26%', width: '14%', rotate: 5,   z: 4 },
+  { left: '16%', top: '30%', width: '16%', rotate: -9,  z: 6 },
+  { left: '33%', top: '24%', width: '17%', rotate: 2,   z: 7 },
+  { left: '52%', top: '28%', width: '20%', rotate: -4,  z: 5 },
+  { left: '73%', top: '25%', width: '14%', rotate: 7,   z: 4 },
+  { left: '87%', top: '29%', width: '11%', rotate: -11, z: 3 },
+  // Row 3 — top ~46–54%
+  { left: '1%',  top: '48%', width: '15%', rotate: -6,  z: 5 },
+  { left: '18%', top: '52%', width: '18%', rotate: 3,   z: 6 },
+  { left: '38%', top: '46%', width: '14%', rotate: -3,  z: 7 },
+  { left: '55%', top: '50%', width: '16%', rotate: 6,   z: 4 },
+  { left: '73%', top: '47%', width: '15%', rotate: -8,  z: 5 },
+  // Row 4 — top ~67–75%
+  { left: '4%',  top: '70%', width: '16%', rotate: 7,   z: 3 },
+  { left: '23%', top: '73%', width: '14%', rotate: -5,  z: 5 },
+  { left: '41%', top: '67%', width: '15%', rotate: 3,   z: 4 },
+  { left: '59%', top: '72%', width: '18%', rotate: -4,  z: 6 },
+  { left: '80%', top: '70%', width: '16%', rotate: 5,   z: 4 },
 ];
 
 function fileExtension(name: string) {

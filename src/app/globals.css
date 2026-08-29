@@ -78,21 +78,22 @@ body {
   display: block;
 }
 
-@media (min-width: 992px) {
-  body.has-custom-cursor {
-    cursor: none;
-  }
+.preloader-logo-stage {
+  perspective: 1200px;
+}
 
-  body.has-custom-cursor header a,
-  body.has-custom-cursor header button,
-  body.has-custom-cursor footer a,
-  body.has-custom-cursor a,
-  body.has-custom-cursor button,
-  body.has-custom-cursor input,
-  body.has-custom-cursor textarea,
-  body.has-custom-cursor select,
-  body.has-custom-cursor label {
-    cursor: pointer;
+.preloader-logo {
+  transform-style: preserve-3d;
+  animation: spin-y 3s linear infinite;
+  will-change: transform;
+}
+
+@keyframes spin-y {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
   }
 }
 

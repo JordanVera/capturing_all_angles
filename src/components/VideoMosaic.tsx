@@ -10,8 +10,8 @@ export function VideoMosaic({
   tiles?: MosaicTile[];
 }) {
   return (
-    <div className="flex min-h-[100dvh] items-center justify-center overflow-hidden px-4 py-28 md:px-8">
-      <div className="relative aspect-[5/4] w-full max-w-[1200px]">
+    <div className="flex min-h-dvh items-center justify-center overflow-hidden px-4 py-20 md:px-8">
+      <div className="relative aspect-11/7 w-full max-w-275">
         {tiles.map((tile, index) => {
           const kind = mosaicMediaKind(tile.src, tile.kind);
 

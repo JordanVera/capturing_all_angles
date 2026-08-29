@@ -1,12 +1,11 @@
-"use client";
+'use client';
 
-import { useCallback, useState } from "react";
-import { CustomCursor } from "@/components/CustomCursor";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { HoverSound } from "@/components/HoverSound";
-import { MobileMenu } from "@/components/MobileMenu";
-import { Preloader } from "@/components/Preloader";
+import { useCallback, useState } from 'react';
+import { Footer } from '@/components/Footer';
+import { Header } from '@/components/Header';
+import { HoverSound } from '@/components/HoverSound';
+import { MobileMenu } from '@/components/MobileMenu';
+import { Preloader } from '@/components/Preloader';
 
 let hasBooted = false;
 
@@ -31,12 +30,11 @@ export function SiteChrome({
   return (
     <div
       className={`relative min-h-[100dvh] bg-black text-foreground ${
-        lockScroll ? "overflow-x-clip md:overflow-hidden" : ""
-      } ${menuOpen ? "overflow-hidden" : ""}`}
+        lockScroll ? 'overflow-x-clip md:overflow-hidden' : ''
+      } ${menuOpen ? 'overflow-hidden' : ''}`}
     >
       {booting ? <Preloader onDone={done} /> : null}
       <HoverSound />
-      <CustomCursor />
       <Header
         menuOpen={menuOpen}
         onToggleMenu={() => setMenuOpen((open) => !open)}
