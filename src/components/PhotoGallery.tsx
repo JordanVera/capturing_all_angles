@@ -34,7 +34,11 @@ export function PhotoGallery({ images }: Props) {
           </span>
           <span className="t-small text-foreground/20">——</span>
           <span className="t-small text-muted">
-            <ScrambleText text="all angles" delayMs={360} hover={false} />
+            <ScrambleText
+              text="capturing all angles"
+              delayMs={360}
+              hover={false}
+            />
           </span>
           <span className="t-small text-foreground/20">——</span>
           <span className="t-small text-muted">
@@ -44,9 +48,7 @@ export function PhotoGallery({ images }: Props) {
       </div>
 
       {/* Contact-Sheet Masonry Grid */}
-      <div
-        className="columns-2 gap-2.5 md:columns-3 lg:columns-4"
-      >
+      <div className="columns-2 gap-2.5 md:columns-3 lg:columns-4">
         {images.map((img, i) => {
           const dims = GALLERY_INTRINSICS[img];
           return (
@@ -80,7 +82,7 @@ export function PhotoGallery({ images }: Props) {
       <div className="mt-20 flex items-center justify-between border-t border-foreground/15 pt-8">
         <span className="t-small text-muted">
           <ScrambleText
-            text={`end of reel · ${images.length} frames`}
+            text={`stills · capturing all angles · ${new Date().getFullYear()}`}
             delayMs={100}
             hover={false}
           />

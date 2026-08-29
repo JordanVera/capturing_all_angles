@@ -144,7 +144,11 @@ export function VideoGallery() {
           </span>
           <span className="t-small text-foreground/20">——</span>
           <span className="t-small text-muted">
-            <ScrambleText text="all angles" delayMs={360} hover={false} />
+            <ScrambleText
+              text="capturing all angles"
+              delayMs={360}
+              hover={false}
+            />
           </span>
           <span className="t-small text-foreground/20">——</span>
           <span className="t-small text-muted">
@@ -215,7 +219,7 @@ export function VideoGallery() {
       <div className="mt-20 flex items-center justify-between border-t border-foreground/15 pt-8">
         <span className="t-small text-muted">
           <ScrambleText
-            text="motion · all angles · 2026"
+            text={`motion · capturing all angles · ${new Date().getFullYear()}`}
             delayMs={100}
             hover={false}
           />

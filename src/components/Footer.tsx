@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { ScrambleText } from '@/components/ScrambleText';
 import { SOCIAL } from '@/lib/site';
 
