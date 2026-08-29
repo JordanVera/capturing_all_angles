@@ -84,8 +84,7 @@ body {
 }
 
 .mosaic-tile video,
-.mosaic-tile img,
-.mosaic-tile iframe {
+.mosaic-tile img {
   display: block;
 }
 
