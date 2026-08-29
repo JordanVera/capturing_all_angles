@@ -147,7 +147,7 @@ export function VideoMosaic() {
 
   return (
     <div
-      className="mosaic-scroll-container mt-24 flex min-h-dvh items-center justify-center overflow-x-auto md:overflow-hidden py-20 md:px-8"
+      className="mosaic-scroll-container  flex min-h-dvh items-center justify-center overflow-x-auto md:overflow-hidden py-20 md:px-8"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >

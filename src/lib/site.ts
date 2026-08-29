@@ -135,7 +135,7 @@ const GRID_LAYOUTS: Pick<
   { left: '39%', top: '83%', width: '10.5%', rotate: -3, z: 5 },
   { left: '53%', top: '81%', width: '19%', rotate: -2, z: 6 },
   { left: '75%', top: '80%', width: '20%', rotate: 3, z: 7 },
-  ];
+];
 
 function fileExtension(name: string) {
   const query = name.split(/[?#]/, 1)[0] ?? name;
