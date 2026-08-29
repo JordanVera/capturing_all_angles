@@ -46,6 +46,13 @@ export function MobileMenu({ open, onClose }: Props) {
             videography
           </Link>
           <Link
+            href="/gear"
+            onClick={onClose}
+            className="t-nav text-foreground transition-colors duration-300 hover:text-accent"
+          >
+            gear
+          </Link>
+          <Link
             href="/book"
             onClick={onClose}
             className="t-nav text-foreground transition-colors duration-300 hover:text-accent"

@@ -16,6 +16,7 @@ export function Header({ menuOpen, onToggleMenu }: Props) {
   const onBook = pathname.startsWith('/book');
   const onPhoto = pathname.startsWith('/photography');
   const onVideo = pathname.startsWith('/videography');
+  const onGear = pathname.startsWith('/gear');
 
   return (
     <header className="pointer-events-none fixed top-0 right-0 left-0 z-[2000]">
@@ -58,6 +59,12 @@ export function Header({ menuOpen, onToggleMenu }: Props) {
             className={`t-nav transition-colors duration-300 hover:text-accent ${onPhoto ? 'text-accent' : 'text-foreground'}`}
           >
             <ScrambleText text="photography" delayMs={120} />
+          </Link>
+          <Link
+            href="/gear"
+            className={`t-nav transition-colors duration-300 hover:text-accent ${onGear ? 'text-accent' : 'text-foreground'}`}
+          >
+            <ScrambleText text="gear" delayMs={180} />
           </Link>
         </nav>
 
