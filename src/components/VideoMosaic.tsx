@@ -1,8 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useMosaicLoad } from '@/components/MosaicLoadContext';
-import { MOTION_TILES } from '@/lib/mosaic';
 import type { MosaicTile } from '@/lib/site';
 
 const REPULSION_RADIUS = 240;
@@ -10,16 +9,6 @@ const REPULSION_STRENGTH = 110;
 
 const mediaClassName =
   'h-auto w-full transition-transform duration-500 group-hover:scale-110';
-
-function mosaicTiles(): MosaicTile[] {
-  return MOTION_TILES.map((clip) => ({
-    src: clip.src,
-    kind: 'video' as const,
-    intrinsicWidth: clip.width,
-    intrinsicHeight: clip.height,
-    ...clip.layout,
-  }));
-}
 
 function MosaicVideo({
   src,
@@ -81,8 +70,8 @@ function MosaicVideo({
   );
 }
 
-export function VideoMosaic() {
-  const displayTiles = useMemo(() => mosaicTiles(), []);
+export function VideoMosaic({ tiles }: { tiles: MosaicTile[] }) {
+  const displayTiles = tiles;
   const gridRef = useRef<HTMLDivElement>(null);
   const tileRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mouseRef = useRef<{ x: number; y: number } | null>(null);

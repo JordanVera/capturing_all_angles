@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { GALLERY_INTRINSICS } from '@/lib/site';
 import { ScrambleText } from '@/components/ScrambleText';
+import type { GalleryImage } from '@/lib/gallery';
 
 type Props = {
-  images: string[];
+  images: GalleryImage[];
 };
 
 export function PhotoGallery({ images }: Props) {
@@ -49,33 +49,32 @@ export function PhotoGallery({ images }: Props) {
 
       {/* Contact-Sheet Masonry Grid */}
       <div className="columns-2 gap-2.5 md:columns-3 lg:columns-4">
-        {images.map((img, i) => {
-          const dims = GALLERY_INTRINSICS[img];
-          return (
-            <div
-              key={img}
-              className="gallery-tile group relative mb-2.5 break-inside-avoid overflow-hidden border border-foreground/10 transition-colors duration-300 hover:border-accent"
-              style={{ animationDelay: `${Math.min(i * 40, 700)}ms` }}
-            >
-              <Image
-                src={`/images/gallery/${img}`}
-                alt=""
-                width={dims?.width ?? 1440}
-                height={dims?.height ?? 1800}
-                className="block h-auto w-full transition-transform duration-700 group-hover:scale-[1.04]"
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                priority={i < 8}
-                aria-hidden
-              />
-              {/* Subtle accent wash on hover */}
-              <div className="pointer-events-none absolute inset-0 bg-accent/0 transition-colors duration-300 group-hover:bg-accent/5" />
-              {/* Frame number */}
-              <span className="absolute right-2 bottom-2 z-10 t-small text-foreground/25 transition-colors duration-300 group-hover:text-accent">
-                [{String(i + 1).padStart(2, '0')}]
-              </span>
-            </div>
-          );
-        })}
+        {images.map((image, i) => (
+          <div
+            key={image.src}
+            className="gallery-tile group relative mb-2.5 break-inside-avoid overflow-hidden border border-foreground/10 transition-colors duration-300 hover:border-accent"
+            style={{ animationDelay: `${Math.min(i * 40, 700)}ms` }}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              className="block h-auto w-full transition-transform duration-700 group-hover:scale-[1.04]"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              priority={i < 8}
+              placeholder={image.lqip ? 'blur' : 'empty'}
+              blurDataURL={image.lqip}
+              aria-hidden={!image.alt || undefined}
+            />
+            {/* Subtle accent wash on hover */}
+            <div className="pointer-events-none absolute inset-0 bg-accent/0 transition-colors duration-300 group-hover:bg-accent/5" />
+            {/* Frame number */}
+            <span className="absolute right-2 bottom-2 z-10 t-small text-foreground/25 transition-colors duration-300 group-hover:text-accent">
+              [{String(i + 1).padStart(2, '0')}]
+            </span>
+          </div>
+        ))}
       </div>
 
       {/* Footer CTA */}

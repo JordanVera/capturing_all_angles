@@ -1,4 +1,4 @@
-import type { MosaicTile } from '@/lib/site';
+import type { MosaicTile } from './site';
 
 export type MotionClip = {
   src: string;
@@ -6,6 +6,38 @@ export type MotionClip = {
   height: number;
   layout: Pick<MosaicTile, 'left' | 'top' | 'width' | 'rotate' | 'z'>;
 };
+
+export function mosaicTilesFromClips(
+  clips: Array<{ src: string; width?: number | null; height?: number | null }>,
+): MosaicTile[] {
+  return clips
+    .filter((clip) => Boolean(clip.src))
+    .map((clip, index) => {
+      const fallback = MOTION_TILES[index % MOTION_TILES.length] ?? MOTION_TILES[0];
+      return motionClipToTile({
+        src: clip.src,
+        width: clip.width ?? fallback?.width ?? 1280,
+        height: clip.height ?? fallback?.height ?? 720,
+        layout: fallback?.layout ?? {
+          left: '0%',
+          top: '0%',
+          width: '25%',
+          rotate: 0,
+          z: 1,
+        },
+      });
+    });
+}
+
+export function motionClipToTile(clip: MotionClip): MosaicTile {
+  return {
+    src: clip.src,
+    kind: 'video',
+    intrinsicWidth: clip.width,
+    intrinsicHeight: clip.height,
+    ...clip.layout,
+  };
+}
 
 export const MOTION_TILES: MotionClip[] = [
   // ── Row 1 ──────────────────────────────────────────────

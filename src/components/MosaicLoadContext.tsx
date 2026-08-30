@@ -8,9 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { MOTION_TILES } from '@/lib/mosaic';
 
-const TOTAL = MOTION_TILES.length;
 const BOOT_TIMEOUT_MS = 10000;
 
 type MosaicLoadValue = {
@@ -31,10 +29,13 @@ export function useMosaicLoad() {
 
 export function MosaicLoadProvider({
   children,
+  total = 0,
 }: {
   children: React.ReactNode;
+  total?: number;
 }) {
   const [ready, setReady] = useState(() => new Set<string>());
+  const [timedOut, setTimedOut] = useState(false);
 
   const markReady = useCallback((src: string) => {
     setReady((prev) => {
@@ -46,18 +47,13 @@ export function MosaicLoadProvider({
   }, []);
 
   useEffect(() => {
-    const id = window.setTimeout(() => {
-      setReady((prev) => {
-        if (prev.size >= TOTAL) return prev;
-        return new Set(MOTION_TILES.map((clip) => clip.src));
-      });
-    }, BOOT_TIMEOUT_MS);
+    const id = window.setTimeout(() => setTimedOut(true), BOOT_TIMEOUT_MS);
     return () => window.clearTimeout(id);
   }, []);
 
   const progress =
-    TOTAL === 0 ? 100 : Math.round((ready.size / TOTAL) * 100);
-  const complete = ready.size >= TOTAL;
+    total === 0 ? 100 : Math.min(100, Math.round((ready.size / total) * 100));
+  const complete = timedOut || total === 0 || ready.size >= total;
 
   const value = useMemo(
     () => ({ markReady, progress, complete }),

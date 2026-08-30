@@ -1,8 +1,7 @@
-import { readdir } from 'node:fs/promises';
-import path from 'node:path';
 import type { Metadata } from 'next';
 import { SiteChrome } from '@/components/SiteChrome';
 import { PhotoGallery } from '@/components/PhotoGallery';
+import { getPhotographyImages } from '@/sanity/lib/content';
 
 export const metadata: Metadata = {
   title: 'Photographer — All Angles',
@@ -11,10 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PhotographyPage() {
-  const files = await readdir(path.join(process.cwd(), 'public/images/gallery'));
-  const images = files
-    .filter((f) => /\.(jpe?g|png|webp|avif|gif)$/i.test(f))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const images = await getPhotographyImages();
 
   return (
     <SiteChrome>

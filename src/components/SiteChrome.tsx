@@ -14,12 +14,14 @@ type Props = {
   children: React.ReactNode;
   showPreloader?: boolean;
   lockScroll?: boolean;
+  mosaicTileCount?: number;
 };
 
 export function SiteChrome({
   children,
   showPreloader = false,
   lockScroll = false,
+  mosaicTileCount = 0,
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [booting, setBooting] = useState(showPreloader && !hasBooted);
@@ -47,7 +49,9 @@ export function SiteChrome({
   );
 
   if (showPreloader) {
-    return <MosaicLoadProvider>{chrome}</MosaicLoadProvider>;
+    return (
+      <MosaicLoadProvider total={mosaicTileCount}>{chrome}</MosaicLoadProvider>
+    );
   }
 
   return chrome;
