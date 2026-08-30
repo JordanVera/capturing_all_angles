@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 export default async function VideographyPage() {
   const { films, shorts } = await getVideographyContent();
 
+  const loadItemCount = films.length + shorts.length;
+
   return (
-    <SiteChrome>
+    <SiteChrome showPreloader mosaicTileCount={loadItemCount}>
       <VideoGallery films={films} shorts={shorts} />
     </SiteChrome>
   );

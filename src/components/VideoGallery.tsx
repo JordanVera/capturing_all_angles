@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import Link from 'next/link';
+import { useMosaicLoad } from '@/components/MosaicLoadContext';
 import { ScrambleText } from '@/components/ScrambleText';
 import type { Film, TallClip } from '@/lib/videography';
 import { youtubeWatchHref } from '@/lib/youtube';
@@ -22,6 +23,7 @@ function ShortClip({
   scrollRoot: RefObject<HTMLDivElement | null>;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const { markReady } = useMosaicLoad();
 
   useEffect(() => {
     const el = ref.current;
@@ -29,6 +31,15 @@ function ShortClip({
 
     el.muted = true;
     el.defaultMuted = true;
+
+    const done = () => markReady(clip.src);
+    const onCanPlay = () => done();
+
+    if (el.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      done();
+    }
+    el.addEventListener('canplay', onCanPlay);
+    el.addEventListener('error', done);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -47,8 +58,12 @@ function ShortClip({
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
-  }, [scrollRoot]);
+    return () => {
+      observer.disconnect();
+      el.removeEventListener('canplay', onCanPlay);
+      el.removeEventListener('error', done);
+    };
+  }, [clip.src, markReady, scrollRoot]);
 
   useEffect(() => {
     const el = ref.current;
@@ -184,6 +199,28 @@ function ShortsRow({
   );
 }
 
+function FilmEmbed({
+  film,
+  start,
+}: {
+  film: Film;
+  start?: number;
+}) {
+  const { markReady } = useMosaicLoad();
+  const loadKey = `film-${film.id}`;
+
+  return (
+    <iframe
+      src={`https://www.youtube-nocookie.com/embed/${film.id}?rel=0&modestbranding=1${start != null ? `&start=${start}` : ''}`}
+      title={film.label}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+      className="h-full w-full"
+      onLoad={() => markReady(loadKey)}
+    />
+  );
+}
+
 export function VideoGallery({
   films,
   shorts,
@@ -249,13 +286,7 @@ export function VideoGallery({
           </div>
           <div className="group relative overflow-hidden border border-foreground/15 transition-colors duration-300 hover:border-accent">
             <div className="aspect-video">
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed/${featured.id}?rel=0&modestbranding=1&start=${featured.start ?? 0}`}
-                title={featured.label}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="h-full w-full"
-              />
+              <FilmEmbed film={featured} start={featured.start ?? 0} />
             </div>
           </div>
         </div>
@@ -291,13 +322,7 @@ export function VideoGallery({
                 </div>
                 <div className="relative overflow-hidden border border-foreground/15 transition-colors duration-300 group-hover:border-accent">
                   <div className="aspect-video">
-                    <iframe
-                      src={`https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1`}
-                      title={video.label}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                      className="h-full w-full"
-                    />
+                    <FilmEmbed film={video} />
                   </div>
                 </div>
                 <p className="t-small mt-2 text-muted">{video.meta}</p>

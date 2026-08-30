@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
@@ -8,7 +9,7 @@ import { MobileMenu } from '@/components/MobileMenu';
 import { MosaicLoadProvider } from '@/components/MosaicLoadContext';
 import { Preloader } from '@/components/Preloader';
 
-let hasBooted = false;
+const bootedRoutes = new Set<string>();
 
 type Props = {
   children: React.ReactNode;
@@ -23,12 +24,15 @@ export function SiteChrome({
   lockScroll = false,
   mosaicTileCount = 0,
 }: Props) {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [booting, setBooting] = useState(showPreloader && !hasBooted);
+  const [booting, setBooting] = useState(
+    () => showPreloader && !bootedRoutes.has(pathname),
+  );
   const done = useCallback(() => {
-    hasBooted = true;
+    bootedRoutes.add(pathname);
     setBooting(false);
-  }, []);
+  }, [pathname]);
 
   const chrome = (
     <div

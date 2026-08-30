@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useMosaicLoad } from '@/components/MosaicLoadContext';
 import { ScrambleText } from '@/components/ScrambleText';
 import type { GalleryImage } from '@/lib/gallery';
 
@@ -10,6 +11,8 @@ type Props = {
 };
 
 export function PhotoGallery({ images }: Props) {
+  const { markReady } = useMosaicLoad();
+
   return (
     <main className="min-h-dvh px-8 pt-36 pb-32 md:pt-40">
       {/* Page Header */}
@@ -66,6 +69,8 @@ export function PhotoGallery({ images }: Props) {
               placeholder={image.lqip ? 'blur' : 'empty'}
               blurDataURL={image.lqip}
               aria-hidden={!image.alt || undefined}
+              onLoad={() => markReady(image.src)}
+              onError={() => markReady(image.src)}
             />
             {/* Subtle accent wash on hover */}
             <div className="pointer-events-none absolute inset-0 bg-accent/0 transition-colors duration-300 group-hover:bg-accent/5" />

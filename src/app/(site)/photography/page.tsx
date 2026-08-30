@@ -13,7 +13,7 @@ export default async function PhotographyPage() {
   const images = await getPhotographyImages();
 
   return (
-    <SiteChrome>
+    <SiteChrome showPreloader mosaicTileCount={images.length}>
       <PhotoGallery images={images} />
     </SiteChrome>
   );
