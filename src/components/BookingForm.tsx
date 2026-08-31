@@ -3,8 +3,8 @@
 import { FormEvent, useState } from 'react';
 import { PROJECT_TYPES, SERVICES } from '@/lib/site';
 
-const FORM_ACTION = 'https://formsubmit.co/verawebdev@protonmail.com';
-const FORM_AJAX = 'https://formsubmit.co/ajax/verawebdev@protonmail.com';
+const FORM_ACTION = 'https://formsubmit.co/capturingallangles@gmail.com';
+const FORM_AJAX = 'https://formsubmit.co/ajax/capturingallangles@gmail.com';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
