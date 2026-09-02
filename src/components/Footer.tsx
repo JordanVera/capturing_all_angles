@@ -6,7 +6,7 @@ import { SOCIAL } from '@/lib/site';
 export function Footer() {
   return (
     <footer className="pointer-events-none fixed right-0 bottom-0 left-0 z-10">
-      <div className="flex items-end justify-between  px-8 pb-8 md:grid md:grid-cols-2">
+      <div className="flex items-end justify-end px-8 pb-8">
         {/* <p className="pointer-events-auto t-small text-muted">
           <ScrambleText
             text="website by"
@@ -17,7 +17,7 @@ export function Footer() {
           />
         </p> */}
 
-        <nav className="pointer-events-auto md:flex-col gap-3 md:gap-2 flex items-end md:justify-end">
+        <nav className="pointer-events-auto flex items-end justify-end gap-3 md:flex-col md:gap-2">
           {SOCIAL.map((item, index) => (
             <a
               key={item.href}
