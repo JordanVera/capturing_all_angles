@@ -60,12 +60,12 @@ export function Header({ menuOpen, onToggleMenu }: Props) {
           >
             <ScrambleText text="photography" delayMs={120} />
           </Link>
-          <Link
+          {/* <Link
             href="/gear"
             className={`t-nav transition-colors duration-300 hover:text-accent ${onGear ? 'text-accent' : 'text-foreground'}`}
           >
             <ScrambleText text="gear" delayMs={180} />
-          </Link>
+          </Link> */}
         </nav>
 
         <Link
