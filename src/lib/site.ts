@@ -14,7 +14,7 @@ export const SOCIAL = [
   },
   {
     label: 'facebook',
-    href: 'https://www.facebook.com/CapturingAllAngles/',
+    href: 'https://www.facebook.com/CapturingAAngles/',
   },
   {
     label: 'Youtube',
